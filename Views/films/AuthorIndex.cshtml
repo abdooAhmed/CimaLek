@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CimaLek.Models.Author>
+
+@{
+    ViewData["Title"] = "AuthorIndex";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h1>AuthorIndex</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageURl)
+            </th>
+            <th>
+                films
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageURl)
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.AuthorId">Edit</a> |
+             </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AuthorId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AuthorId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AuthorId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,116 @@
+﻿@model Entertment.Models.film
+@using CimaLek.Data
+@{
+    
+    ViewData["Title"] = "film";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var types = Model.filmtypes.ToList();
+    var servers = Model.filmWatches;
+    var actors = Model.AuthorToFilms;
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="row direct">
+        <div class="col-lg-3 col-md-6" style="margin-bottom: 1rem;">
+            <div class="card h-100">
+                <div class="card-header pb-0">
+                    <h6 style="text-align: center;">The Kissing Booth 3</h6>
+
+                </div>
+                <div class="card-body" style="padding:  0;">
+
+                    <img class="img-fluid" style="height: 100%;width: 100%;margin: 0;border-radius:10px"
+                         src="@Url.Content(Model.image)">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-6 mb-md-0 mb-4">
+            <div class="card" style="height: 100%;">
+                <div class="card-header pb-0">
+                    <h6 style="text-align: center;margin: 0;">The Kissing Booth 3</h6>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="row" style="height: 100%;">
+                        <div class="col-lg-5 col-md-6 " style="width: 100%;">
+                            <div class="aling">
+                                <ul style="list-style: none;margin-top: 0;">
+                                    <li>
+                                        <h6 style="display: inline;">تصنيف الفلم</h6> :
+                                        @foreach (var type in types)
+                                        {
+                                            <span style="color: black;">@type.type.type,</span>
+                                        }
+
+                                    </li>
+                                    <li>
+                                        <h6 style="display: inline;">سنة الإنتاج</h6> : <span style="color: black;">@Model.CreateDate.Year</span>
+                                    </li>
+                                    <li>
+                                        <h6 style="display: inline;">مدة الفيلم</h6> : <span style="color: black;">@Model.time</span>
+                                    </li>
+                                    <li>
+                                        <h6 style="display: inline;">دول الأنتاج</h6> : <span style="color: black;">@Model.country</span>
+                                    </li>
+
+                                </ul>
+                                <div>
+                                    <h5>
+                                        إنه الصيف قبل أن تتجه إيلي إيفانز إلى الكلية,ولديها قرار كبير يتعين عليه اتخاذه
+                                    </h5>
+                                </div>
+                                <div class="flex">
+
+                                    <a href="#" class="ahref">
+                                        watch
+                                    </a>
+                                    <a href="#" class="ahref" style="border: 1 solid black;">
+                                        Download
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-7 col-md-6 col-12  ">
+                            <iframe src="@Url.Content(Model.TrailerURl)"
+                                    style="height:22.5rem;width: 100%;border-radius: 10px;"></iframe>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row" style="margin:5rem 8rem;">
+        @foreach (var actor in actors)
+        {
+            <div class="col-xl-2 col-lg-2 col-md-4" >
+
+                <div class="card h-100">
+                    <div style="text-align: center;" class="card-header p-3">
+                        <h6 class="mb-0">@actor.Author.author</h6>
+                    </div>
+                    <div class="card-body  " style="padding:  0;">
+
+                        <img class="img-fluid" style="height: 100%;width: 100%;margin: 0;border-radius:10px"
+                             src="@Url.Content(actor.Author.ImageURl)">
+
+
+                    </div>
+                </div>
+
+            </div>
+        }
+        </div>
+</div>

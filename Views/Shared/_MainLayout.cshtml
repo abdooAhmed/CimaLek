@@ -1,0 +1,165 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CimaLek.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject RoleManager<IdentityRole> roleManage
+
+@{
+    var user = await SignInManager.UserManager.FindByNameAsync(User.Identity.Name);
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="~/css/AddUser.css" rel="stylesheet" />
+    
+
+    <link rel="stylesheet" href="~/css/StyleSheet.css">
+    <link rel="stylesheet" href="~/css/profile.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class='bx bxl-c-plus-plus icon'></i>
+            <div class="logo_name">CodingLab</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search...">
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a class="a-link" asp-controller="Home" asp-action="Index">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Home</span>
+                </a>
+                <span class="tooltip">Home</span>
+            </li>
+            <li>
+                <a asp-controller="Admin" asp-action="ViewAllUser">
+                    <i class='bx bxs-video'></i>
+                    <span class="links_name">Movies</span>
+                </a>
+                <span class="tooltip">Movies</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx  bxs-camera-movie'></i>
+                    <span class="links_name">Series</span>
+                </a>
+                <span class="tooltip">Series</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-folder'></i>
+                    <span class="links_name">File Manager</span>
+                </a>
+                <span class="tooltip">Files</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cart-alt'></i>
+                    <span class="links_name">Order</span>
+                </a>
+                <span class="tooltip">Order</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-heart'></i>
+                    <span class="links_name">Saved</span>
+                </a>
+                <span class="tooltip">Saved</span>
+            </li>
+            <li>
+                <form id="submit" class="form-inline" asp-action="LogOut" asp-controller="Account" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <a onclick="submet1()" href="#">
+                        <i class='bx bx-log-out'></i>
+                        <span class="links_name">Log out</span>
+                    </a>
+                </form>
+
+                <span class="tooltip">Log out</span>
+            </li>
+            <li class="profile">
+                <a asp-controller="Admin" asp-action="Profile" style="background:rgba(0,0,0,0);cursor:pointer;">
+                    <div class="profile-details">
+
+                        <div class="name_job">
+                            <div style="margin-left:1rem ;" class="name">@User.Identity.Name</div>
+
+                        </div>
+                    </div>
+
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="home-section">
+        @RenderBody()
+    </div>
+
+
+
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();//calling the function(optional)
+        });
+
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+            }
+        }
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.6.0.js"></script>
+    <script src="~/js/jquery-ui.js"></script>
+    <script>
+        function submet1() {
+            $('#submit').submit();
+
+
+
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

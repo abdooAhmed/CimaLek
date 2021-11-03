@@ -1,0 +1,139 @@
+﻿@model CimaLek.Models.SeriesData
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<hr />
+<div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+    <div class="card z-index-0">
+        <div class="card-header text-center pt-4">
+            <h5>Add Serie</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="seriesId" />
+                <div class="mb-3">
+                    <label asp-for="name" class="control-label"></label>
+                    <input asp-for="name" class="form-control" />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="country" class="control-label"></label>
+                    <input asp-for="country" class="form-control" />
+                    <span asp-validation-for="country" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="time" class="control-label"></label>
+                    <input asp-for="time" class="form-control" />
+                    <span asp-validation-for="time" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CreateDate" class="control-label"></label>
+                    <input asp-for="CreateDate" class="form-control" />
+                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Describtion" class="control-label"></label>
+                    <input asp-for="Describtion" class="form-control" />
+                    <span asp-validation-for="Describtion" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="rate" class="control-label"></label>
+                    <input asp-for="rate" class="form-control" />
+                    <span asp-validation-for="rate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="TrailerURl" class="control-label"></label>
+                    <input asp-for="TrailerURl" class="form-control" />
+                    <span asp-validation-for="TrailerURl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="image" class="control-label"></label>
+                    <input asp-for="image" type="file" class="form-control" />
+                    <span asp-validation-for="image" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="type" id="sub" class="control-label">Type</label>
+                    <input asp-for="type" id="tags" class="form-control" />
+                    <span asp-validation-for="type" class="text-danger"></span>
+
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            var date = @Html.Raw(Json.Serialize(ViewBag.typeId));
+
+
+
+            var availableTags = new Array();
+            for (var x of date) {
+
+                availableTags.push(x.text);
+            }
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $("#tags")
+                // don't navigate away from the field on tab when selecting an item
+                .on("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        // delegate back to autocomplete, but extract the last term
+                        response($.ui.autocomplete.filter(
+                            availableTags, extractLast(request.term)));
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(",");
+                        return false;
+                    }
+                });
+        });
+       $(document).ready(function () {
+            $("#sub").click(function () {
+               console.log($("#tags").val()) ;
+            });
+        });
+
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
