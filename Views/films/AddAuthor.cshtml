@@ -26,26 +26,35 @@
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label  class="control-label">Add Anthor Actor</label>
-                    <input  asp-for="Again"  />
+                    <label class="control-label">Add Anthor Actor</label>
+                    <input asp-for="Again" />
                     <span asp-validation-for="Again" class="text-danger"></span>
                 </div>
                 <div class="text-center">
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                    
+                    <input type="submit" value="Add" class="btn btn-dark" />
+
                 </div>
             </form>
         </div>
+        <div class="card-footer text-center pt-4">
+            
+            <div>
+                <a asp-action="SelectActor" asp-route-id="@ViewBag.id" class="btn btn-dark">select Actor</a>
+            </div>
+            <div>
+                <a asp-action="AuthorIndex">Back to List</a>
+            </div>
+
+        </div>
     </div>
-</div>
 
 
-@section Scripts{ 
-  <script>
-      function submet1() {
-          document.getElementById("again").checked = true;
-          alert(document.getElementById("again").checked);
-          $('#submit1').submit();
-      }
-  </script>
+@section Scripts{
+    <script>
+        function submet1() {
+            document.getElementById("again").checked = true;
+            alert(document.getElementById("again").checked);
+            $('#submit1').submit();
+        }
+    </script>
 }

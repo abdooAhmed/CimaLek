@@ -1,0 +1,119 @@
+﻿@model CimaLek.Models.Author
+@{
+    ViewData["Title"] = "SelectActor";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var agein = false;
+}
+
+<h1>SelectActor</h1>
+
+
+<div class="col-xl-6 col-lg-6 col-md-7 mx-auto">
+    <div class="card z-index-0">
+        <div class="card-header text-center pt-4">
+            <h5>Add Author</h5>
+        </div>
+        <div class="card-body">
+            <form id="submit1" asp-action="AddAuthor" asp-route-id="@ViewBag.id" asp-route-again="@agein" enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label asp-for="author" id="sub" class="control-label"></label>
+                    <input asp-for="author" id="tags" class="form-control" />
+                    <span asp-validation-for="author" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="control-label">Add Anthor Actor</label>
+                    <input asp-for="Again" />
+                    <span asp-validation-for="Again" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Add" class="btn btn-primary" />
+
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center pt-4">
+            
+            <div>
+                <a asp-action="AddAuthor" asp-route-id="@ViewBag.id" class="btn btn-primary">Add new Actor</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+
+    <script>
+            function submet1() {
+                document.getElementById("again").checked = true;
+                alert(document.getElementById("again").checked);
+                $('#submit1').submit();
+            }
+
+
+
+             $(function () {
+            var date = @Html.Raw(Json.Serialize(ViewBag.actor));
+
+
+
+            var availableTags = new Array();
+            for (var x of date) {
+
+                availableTags.push(x.text);
+            }
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $("#tags")
+                // don't navigate away from the field on tab when selecting an item
+                .on("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        // delegate back to autocomplete, but extract the last term
+                        response($.ui.autocomplete.filter(
+                            availableTags, extractLast(request.term)));
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(",");
+                        return false;
+                    }
+                });
+        });
+       $(document).ready(function () {
+            $("#sub").click(function () {
+               console.log($("#tags").val()) ;
+            });
+        });
+
+
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+

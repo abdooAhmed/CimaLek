@@ -119,10 +119,38 @@ namespace CimaLek.Controllers
                 }
 
 
-                return RedirectToAction("AddAuthor",new { id = film.filmId});
+                return RedirectToAction("SelectActor", new { id = film.filmId});
             }
             return View(seriesData);
         }
+
+        public async Task<IActionResult> SelectActor(string? id)
+        {
+            if (id != null)
+            {
+                ViewBag.id = id;
+                ViewData["actor"] = new SelectList(_context.Authors, "AuthorId", "author");
+                return View();
+            }
+            return new NotFoundResult();
+            
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SelectActor(Author authorData, string? id)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.id = id;
+                ViewData["actor"] = new SelectList(_context.Authors, "AuthorId", "author");
+                string[] subs = authorData.author.Split(',');
+                return View();
+            }
+            return new NotFoundResult();
+
+        }
+
         [HttpGet]
         public async Task<IActionResult> AddAuthor(string? id)
         {

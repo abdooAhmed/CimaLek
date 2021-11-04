@@ -457,3 +457,4 @@ C:\Users\abdo\source\repos\CimaLek\obj\Debug\net5.0\Razor\Views\films\ServerInde
 C:\Users\abdo\source\repos\CimaLek\obj\Debug\net5.0\Razor\Views\films\film.cshtml.g.cs
 C:\Users\abdo\source\repos\CimaLek\obj\Debug\net5.0\Razor\Views\films\AddAuthor.cshtml.g.cs
 C:\Users\abdo\source\repos\CimaLek\obj\Debug\net5.0\Razor\Views\films\AuthorIndex.cshtml.g.cs
+C:\Users\abdo\source\repos\CimaLek\obj\Debug\net5.0\Razor\Views\films\SelectActor.cshtml.g.cs
